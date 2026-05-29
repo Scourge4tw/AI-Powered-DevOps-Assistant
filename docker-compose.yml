@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+
+  backend:
+    build: ./ai-devops-backend
+
+    container_name: ai-devops-backend
+
+    ports:
+      - "8000:8000"
+
+    env_file:
+      - ./ai-devops-backend/.env
+
+  frontend:
+    image: node:18
+
+    container_name: ai-devops-frontend
+
+    working_dir: /app
+
+    volumes:
+      - ./ai-devops-frontend:/app
+
+    ports:
+      - "3000:3000"
+
+    command: sh -c "npm install && npm start"
+
+    depends_on:
+      - backend
